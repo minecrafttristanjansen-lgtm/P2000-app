@@ -1,4 +1,4 @@
-<!doctype html><html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#10141c"><title>P2000 Persoonlijk V0.21.5</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzxVb7m2Nlyj5Nn2I6dY=" crossorigin=""><style>
+<!doctype html><html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#10141c"><title>P2000 Persoonlijk V0.21.7</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzxVb7m2Nlyj5Nn2I6dY=" crossorigin=""><style>
 :root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#f4f6fa;background:#10141c}*{box-sizing:border-box}body{margin:0}header{padding:20px 16px 12px;position:sticky;top:0;background:#10141cf2;z-index:2;border-bottom:1px solid #303846}h1{margin:0;font-size:23px}small,.muted{color:#aeb9ca}.status{margin-top:10px;padding:9px 11px;border-radius:10px;background:#26303b;font-size:12px}.status.ok{color:#86efac}.status.bad{color:#fca5a5}main{padding:14px 14px 105px;max-width:700px;margin:auto}.toolbar{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}button,select,input{background:#26303b;color:#fff;border:1px solid #465264;border-radius:10px;padding:11px;font:inherit}button{cursor:pointer}button.active{background:#a92c33;border-color:#f26c72}button:disabled{opacity:.5}.card{background:#202833;border:1px solid #364150;border-radius:15px;padding:14px;margin:10px 0}.row{display:flex;align-items:center;justify-content:space-between;gap:8px}.tag{font-size:11px;font-weight:750;letter-spacing:.05em}.fire{color:#ff656b}.police{color:#72a5ff}.ambulance{color:#f4d34c}.card h3{font-size:16px;line-height:1.35;margin:10px 0}.card p{margin:6px 0;font-size:13px;color:#c5cfdd}.pill{font-size:11px;border:1px solid #556070;border-radius:8px;padding:4px 6px}.tabs{position:fixed;bottom:0;left:0;right:0;background:#171e28;border-top:1px solid #354052;display:flex;justify-content:space-around;padding:8px 2px max(9px,env(safe-area-inset-bottom));z-index:3}.tabs button{background:none;border:0;color:#b7c1d0;display:flex;flex-direction:column;align-items:center;font-size:11px;gap:4px;padding:6px 4px}.tabs button.selected{color:#ff747a}.tabs span{font-size:20px}.hidden{display:none!important}a{color:#9ccaff}.section{margin-bottom:16px}.section h2{font-size:18px}.hint{background:#222b35;border-radius:12px;padding:13px;font-size:13px;color:#d0d9e4;line-height:1.5}.field{display:block;margin:12px 0}.field input,.field select{width:100%;margin-top:5px}.mini{font-size:12px}.empty{text-align:center;padding:35px 12px;color:#bdc8d7}.switch{display:flex;gap:8px;align-items:center}.switch input{width:auto}.map{height:280px;background:linear-gradient(120deg,#243345,#17232e);border:1px solid #415366;border-radius:14px;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;color:#cbd5e1}details{margin-top:10px}summary{cursor:pointer;color:#dce8ff}.danger{color:#fda4af}.vehicles{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 5px}.vehicle{background:#394352;border:1px solid #657286;color:#f9fafb;font-size:12px;font-weight:750;padding:5px 9px;border-radius:8px}.vehicle-note{font-size:12px;color:#9eacbd;margin-top:9px}.source{font-size:12px;margin-top:12px}
 
 .discipline-switches{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-bottom:13px}.discipline-switches button{padding:10px 2px;font-size:11px;background:#303741;color:#b8c1cf;border:1px solid #455061}.discipline-switches button.on.fire-toggle{background:#991b1b;color:white;border-color:#ef4444}.discipline-switches button.on.ambulance-toggle{background:#a16207;color:white;border-color:#eab308}.discipline-switches button.on.police-toggle{background:#1d4ed8;color:white;border-color:#60a5fa}.discipline-switches button .ico{display:block;font-size:19px;margin-bottom:4px}.map{height:min(67vh,560px);padding:0;display:block;overflow:hidden;position:relative;touch-action:pan-x pan-y}.leaflet-container{width:100%;height:100%;font:inherit}.leaflet-container img.leaflet-tile{max-width:none!important;max-height:none!important;width:256px;height:256px}.leaflet-pane,.leaflet-tile-pane,.leaflet-map-pane{position:absolute}.leaflet-tile{position:absolute;left:0;top:0}.mini-map{cursor:pointer}.gps-dot{width:18px;height:18px;border-radius:50%;background:#3b82f6;border:3px solid white;box-shadow:0 0 0 7px #3b82f644,0 2px 8px #0008}.gps-btn{margin:0 0 10px}.map-note{color:#aeb9ca;font-size:12px}.mini-map{height:190px;margin-top:10px;border-radius:12px;overflow:hidden;background:#253346;position:relative}.map-msg{font-size:12px;color:#aeb9ca;margin:9px 0}.map-link{display:block;width:100%;margin-top:8px;text-align:center;background:#334155;border:1px solid #62758b}.incident-details{margin-top:10px}.map-pin{width:42px;height:55px;filter:drop-shadow(0 2px 3px #0009)}.map-pin svg{width:42px;height:55px}.map-pin svg .pin-body{stroke:#fff;stroke-width:2}.leaflet-container{background:#263341}.dark-tiles .leaflet-tile-pane{filter:grayscale(1) invert(1) hue-rotate(180deg) brightness(.75) contrast(1.2)}.home-filters button.active{background:#a92c33;border-color:#f26c72;color:white}.leaflet-popup-content-wrapper,.leaflet-popup-tip{background:#202833;color:#fff}.leaflet-popup-content{line-height:1.5}.map-info{padding:12px;background:#202833;border:1px solid #364150;border-radius:12px;margin-top:10px}.map-info h3{margin:4px 0;font-size:15px}.map-info p{margin:4px 0;font-size:12px;color:#c5cfdd}
@@ -33,7 +33,7 @@ header{z-index:1100}
 .pill.test-pill{background:#f97316;color:#fff;border:1px solid #fdba74;font-weight:800;padding:5px 10px}
 .vehicle-list{background:#293341;border:1px solid #465264;border-radius:9px;padding:10px 12px;margin:9px 0 15px}.vehicle-line{padding:5px 0;font-size:14px;line-height:1.55}.vehicle-line b{display:inline-block;min-width:66px;color:#fff}.card{cursor:pointer}.card button,.card input,.card a,.card .mini-map{cursor:pointer}.status.hidden{display:none!important}#mapinfo{cursor:pointer}#mapinfo:focus-visible,.card:focus-visible{outline:2px solid #93c5fd;outline-offset:2px}
 .priority-pill{font-size:13px;font-weight:800;padding:5px 10px;border-radius:9px;border:1px solid}.priority-pill.fire{background:#7f1d1d;border-color:#ef4444;color:#fff}.priority-pill.ambulance{background:#a16207;border-color:#facc15;color:#fff}.push-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:12px 0}.push-region{display:flex;align-items:center;gap:8px;background:#26303b;border:1px solid #465264;border-radius:9px;padding:10px;font-size:12px}.push-region input{accent-color:#e85b61;flex:none}.push-cap-row{display:flex;gap:7px}.push-cap-row input{flex:1;min-width:0}.push-cap-item{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:9px 0;border-bottom:1px solid #364150;font-size:13px}.push-cap-item small{display:block;margin-top:3px}.push-cap-item button{padding:6px 9px}.push-notice{font-size:12px;color:#fcd34d;line-height:1.5}
-</style></head><body><header><div class="row"><div><h1>🚨 P2000 <small style="font-size:12px">V0.21.5</small></h1><small>Persoonlijke testversie</small></div><button id="refresh">↻ Vernieuwen</button></div><div id="status" class="status hidden" aria-live="polite"></div></header><main>
+</style></head><body><header><div class="row"><div><h1>🚨 P2000 <small style="font-size:12px">V0.21.7</small></h1><small>Persoonlijke testversie</small></div><button id="refresh">↻ Vernieuwen</button></div><div id="status" class="status hidden" aria-live="polite"></div></header><main>
 <section id="home"><div class="discipline-switches home-filters"><button data-filter="all" class="active">Alles</button><button data-filter="fire">🔥 Brandweer</button><button data-filter="police">🛡️ Politie</button><button data-filter="ambulance">🚑 Ambulance</button></div><input id="search" style="width:100%" placeholder="Zoek in meldingen, plaatsen, voertuigen…"><p class="mini muted" style="margin:10px 0">Home toont alleen meldingen van geselecteerde veiligheidsregio's OF capcodes. Beheer je selectie bij Instellingen.</p><div class="row" style="margin-top:14px"><strong>Nieuwste meldingen</strong><small id="count"></small></div><div id="feed" class="empty">Tik op Vernieuwen om live meldingen op te halen.</div></section>
 <section id="mapview" class="hidden"><h2>Kaart</h2><div class="toolbar"><button class="mapstyle active" data-style="Licht">Licht</button><button class="mapstyle" data-style="Donker">Donker</button><button class="mapstyle" data-style="Satelliet">Satelliet</button></div><button class="gps-btn" id="locate" type="button">◎ Mijn locatie</button><div class="map" id="fullmap"></div><p id="gpsstatus" class="map-note">Locatie nog niet bepaald.</p><p class="map-msg" id="mapstatus">De kaart toont meldingen met een herkenbare locatie. Meldingen zonder betrouwbare locatie krijgen geen verzonnen pinpoint.</p><div id="mapinfo" class="map-info hidden"></div></section>
 <section id="station" class="hidden"><h2>Eigen post</h2><p class="hint">Stel hier je eigen post in. Capcodefiltering werkt zodra de P2000-bron capcodes en omschrijvingen meestuurt.</p><label class="field">Naam brandweerpost<input id="stationName" placeholder="Bijvoorbeeld: Brandweerpost Urk"></label><button id="saveStation">Post opslaan</button><div id="stationSaved" class="muted" style="margin-top:10px"></div></section>
@@ -56,7 +56,7 @@ function parseIncidentTime(value){
  if(dutch)return parseIncidentTime(`${dutch[3]}-${dutch[2]}-${dutch[1]}T${dutch[4]}:${dutch[5]}:${dutch[6]||'00'}`);
  return new Date(raw);
 }
-let incidents=[],demo=false,lastFetch=0;const enabled=new Set(JSON.parse(localStorage.getItem('p2000disciplines')||'["fire","ambulance","police"]'));let homeFilter='all';let map=null,markers=null,geoCache={},geoBusy=false,geoQueue=[],geoPending=new Set(),mapStyle=localStorage.getItem('p2000map')||'Licht';try{geoCache=JSON.parse(localStorage.getItem('p2000geocache')||'{}')}catch(e){};if(localStorage.getItem('p2000geo_version')!=='0215'){geoCache={};localStorage.removeItem('p2000geocache');localStorage.setItem('p2000geo_version','0215')}const sample=[{title:'P1 Brand woning – Voorbeeldstraat Urk',date:new Date(Date.now()-6*60000),link:'',kind:'fire',description:'P1 BR woning TS 25-1231 HW 25-1251',example:true},{title:'A1 Ambulance inzet – Emmeloord',date:new Date(Date.now()-14*60000),link:'',kind:'ambulance',example:true},{title:'P1 Grote brand – opschaling woningbrand Urk',date:new Date(Date.now()-3*60000),link:'',kind:'fire',description:'P1 Grote brand TS 25-1231 TS 25-1331 OVD',example:true}];function status(s,type=''){let el=$('status');el.textContent=s;el.className='status '+type+(s?'':' hidden')}function kind(t){t=t.toLowerCase();return /brandweer|brand |p1 |p2 |tankautospuit|autoladder|middelbrand|grote brand/.test(t)?'fire':/ambulance|a1 |a2 |rapid responder|mmt/.test(t)?'ambulance':/politie|agent|eenheid politie/.test(t)?'police':'other'}// V0.14: uitsluitend de echte capcodes uit bronmetadata gebruiken.
+let incidents=[],demo=false,lastFetch=0;const enabled=new Set(JSON.parse(localStorage.getItem('p2000disciplines')||'["fire","ambulance","police"]'));let homeFilter='all';let map=null,markers=null,geoCache={},geoBusy=false,geoQueue=[],geoPending=new Set(),mapStyle=localStorage.getItem('p2000map')||'Licht';try{geoCache=JSON.parse(localStorage.getItem('p2000geocache')||'{}')}catch(e){};if(localStorage.getItem('p2000geo_version')!=='0217'){geoCache={};localStorage.removeItem('p2000geocache');localStorage.setItem('p2000geo_version','0217')}const sample=[{title:'P1 Brand woning – Voorbeeldstraat Urk',date:new Date(Date.now()-6*60000),link:'',kind:'fire',description:'P1 BR woning TS 25-1231 HW 25-1251',example:true},{title:'A1 Ambulance inzet – Emmeloord',date:new Date(Date.now()-14*60000),link:'',kind:'ambulance',example:true},{title:'P1 Grote brand – opschaling woningbrand Urk',date:new Date(Date.now()-3*60000),link:'',kind:'fire',description:'P1 Grote brand TS 25-1231 TS 25-1331 OVD',example:true}];function status(s,type=''){let el=$('status');el.textContent=s;el.className='status '+type+(s?'':' hidden')}function kind(t){t=t.toLowerCase();return /brandweer|brand |p1 |p2 |tankautospuit|autoladder|middelbrand|grote brand/.test(t)?'fire':/ambulance|a1 |a2 |rapid responder|mmt/.test(t)?'ambulance':/politie|agent|eenheid politie/.test(t)?'police':'other'}// V0.14: uitsluitend de echte capcodes uit bronmetadata gebruiken.
 // Zescijferige roepnummers in de berichttekst zijn GEEN capcodes.
 function normalizeCapcode(raw){const code=String(raw??'').trim();return /^\d{6,7}$/.test(code)?code.padStart(7,'0'):null}
 function isMonitorCap(c){return /(?:monitor(?:code|capcode|groep)?|lichtkrant)/i.test(c.label||'')}
@@ -104,68 +104,59 @@ function priority(i){const raw=(i.title||'')+' '+(i.description||'');if(i.kind==
 const KNOWN_PLACES=['Den Haag','Krimpen aan den IJssel','Amsterdam','Rotterdam','Leiden','Lelystad','Almere','Urk','Emmeloord','Dronten','Zeewolde','Biddinghuizen','Swifterbant','Utrecht','Katwijk','Zwolle','Eindhoven','Groningen','Arnhem','Nijmegen','Haarlem','Delft','Zoetermeer','Apeldoorn','Amersfoort','Breda','Tilburg','Ede','Uden','Hilversum','Dordrecht','Hoorn','Enschede','Assen','Meppel','Leeuwarden','Alkmaar','Purmerend','Heerenveen','Harderwijk','Kampen','Standdaarbuiten','Schiedam','Westervoort','Weesp','Horst','Spijkenisse','Sliedrecht','Leiden','Dordrecht'];
 function norm(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('nl').replace(/[^\p{L}\p{N}]/gu,'')}
 function locationText(i){
- const raw=((i.description||'')+' '+(i.title||'')).replace(/\s+/g,' ').replace(/\b(?:P\s*[1-5]|A\s*[012]|Prio\s*[1-5])\b/gi,' ').trim();
+ const raw=((i.title||'')+' '+(i.description||'')).replace(/\s+/g,' ').trim();
  const placePattern=KNOWN_PLACES.map(x=>x.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).sort((a,b)=>b.length-a.length).join('|');
- const placeMatch=raw.match(new RegExp('\\b('+placePattern+')\\b','i'));
- let place=placeMatch?.[1];
- const suffix='straat|laan|weg|dijk|plein|hof|erf|singel|kade|pad|steeg|plantsoen|gracht|baan|dreef|park|wal|poort|akker|veld';
- // Landelijke herkenning: een getal kan onderdeel van een straatnaam zijn
- // (Horst 30, Botter 12, Dorpsstraat 30). P2000 levert geen huisnummers.
- // Het cijfer hoort altijd bij de volledige straatnaam; de geocoder
- // accepteert uitsluitend een exact overeenkomende straat in de juiste plaats.
- const numbered=[...raw.matchAll(/\b([\p{L}][\p{L}'-]*(?:\s+[\p{L}][\p{L}'-]*){0,2})\s+(\d{1,4}[a-z]?)\b/giu)].find(m=>!/^BMD|^TS|^HV|^OVD/i.test(m[1]));
- if(numbered){
-  const after=raw.slice(numbered.index+numbered[0].length);
-  const cityAfter=KNOWN_PLACES.filter(x=>norm(x)!==norm(numbered[1])).find(x=>new RegExp('\\b'+x.replace(/ /g,'\\s+')+'\\b','i').test(after));
-  if(cityAfter)place=cityAfter;
-  if(place&&norm(place)!==norm(numbered[1])&&(!placeMatch||numbered.index<placeMatch.index)){
-   const words=numbered[1].trim().split(/\s+/);
-   const prefixNoise=/^(?:woning|brand|br|p|bmd|ambulance|ambu|ongeval|incident|ass|hulpverlening|melding|rit|aanrijding|liftopsluiting|stormschade|pr(?:io)?|buiten|binnen|spoed)$/i;
-   while(words.length>1&&prefixNoise.test(words[0]))words.shift();
-   const candidate=words.join(' ')+' '+numbered[2];
-   if(!prefixNoise.test(words[0])&&!/^(?:A|N)\d+$/i.test(words[0]))return candidate+', '+place+', Nederland';
-  }
- }
- const streetRe=new RegExp('\\b((?:[\\p{L}][\\p{L}\\x27-]*)(?:'+suffix+'))\\b','iu');
- const street=raw.match(streetRe);
- if(street&&place){const before=raw.slice(Math.max(0,street.index-35),street.index);const prefix=before.match(/\b(van|de|den|het|sint|st)\s+$/i);return (prefix?prefix[0]:'')+street[1]+', '+place+', Nederland';}
- // "De Landerijen", "Het ..." en soortgelijke straatnamen.
- const named=raw.match(/\b(?:de|het|den)\s+[\p{L}][\p{L}'-]+(?:\s+[\p{L}][\p{L}'-]+)?/iu);
- if(named&&place&&named.index<placeMatch.index)return named[0]+', '+place+', Nederland';
- if(place)return place+', Nederland';
- // Als een plaats niet op de lijst staat, alleen een expliciet "in/te <plaats>" gebruiken.
- const explicit=raw.match(/\b(?:in|te)\s+([\p{L}][\p{L}'-]+(?:\s+(?:aan|den|de|het|van|der)\s+[\p{L}][\p{L}'-]+){0,2})/iu);
- return explicit?explicit[1]+', Nederland':null;
+ const cityRe=new RegExp('\\b('+placePattern+')\\b','gi');
+ const matches=[...raw.matchAll(cityRe)];
+ // Gebruik de plaats achter de straat; een straatnaam kan zelf ook een plaatsnaam zijn.
+ const city=matches.find(m=>!/^horst$/i.test(m[1]))||matches[0];
+ if(!city)return null;
+ const before=raw.slice(0,city.index).trim();
+ const place=city[1];
+ // Een wegnummer is geen straatnaam en krijgt een afzonderlijke behandeling.
+ if(/\b[AN]\s?\d{1,3}\b/i.test(before))return null;
+ // Neem de laatste straatnaamwoorden vóór de plaats, niet de P2000-inzetcode.
+ let tail=before.replace(/\b\d{1,3}[,.]\d{1,3}\s*$/,'').trim();
+ tail=tail.replace(/\b(?:BMD[-\s]?\d+|BR|P\s?[1-5]|A\s?[012]|TS\s?\d+|HV\s?\d+|OVD|woning|ongeval|wegvervoer|liftopsluiting|brand|melding|assistentie|hulpverlening)\b/gi,' ').replace(/\s+/g,' ').trim();
+ const tokens=tail.match(/[\p{L}][\p{L}'’-]*(?:\s+\d{1,4}[a-z]?)?/giu)||[];
+ if(!tokens.length)return place+', Nederland';
+ const suffix=/straat|laan|weg|dijk|plein|hof|erf|singel|kade|pad|steeg|plantsoen|gracht|baan|dreef|park|wal|poort|akker|veld|schans$/i;
+ let street=tokens[tokens.length-1];
+ if(tokens.length>=2&&(/^(?:van|de|den|het|sint|st|der|aan)$/i.test(tokens[tokens.length-2])||suffix.test(street)&&!/^\d/.test(tokens[tokens.length-2])))street=tokens[tokens.length-2]+' '+street;
+ if(tokens.length>=3&&/^(?:van|de|den|het|sint|st|der|aan)$/i.test(tokens[tokens.length-3]))street=tokens[tokens.length-3]+' '+street;
+ // Geen straat uit alleen een oproepnummer of een los getal verzinnen.
+ if(!/[\p{L}]{3}/u.test(street))return place+', Nederland';
+ return street+', '+place+', Nederland';
 }
-// Rijkswegen en provinciale wegen: HMP wordt herkend, maar Nominatim kan een
-// hectometerpunt NIET exact lokaliseren. Alleen de weg/plaats wordt gegeocodeerd.
 function roadIncident(i){
- const raw=((i.description||'')+' '+i.title).replace(/\s+/g,' ');
+ const raw=((i.title||'')+' '+(i.description||'')).replace(/\s+/g,' ');
  const road=raw.match(/\b([AN]\s?\d{1,3})\b/i);
  if(!road)return null;
- const hmp=raw.match(/(?:\bHMP\s*[:=]?\s*|\bhectometer(?:paal)?\s*[:=]?\s*|\b[AN]\s?\d{1,3}\s*[-–]?\s*)(\d{1,3}[,.]\d{1,3})\b/i);
- const dir=raw.match(/\b(?:Li|Re|Links|Rechts)\b/i);
- const roadName=road[1].toUpperCase().replace(/\s+/g,'');
- return {road:roadName,hmp:hmp?.[1]||'',direction:dir?.[0]||''};
+ const hmp=raw.match(/(?:\bHMP\s*[:=]?\s*|\bhectometer(?:paal)?\s*[:=]?\s*|\b(?:Harderdijk|[AN]\s?\d{1,3})\s*)(\d{1,3}[,.]\d{1,3})\b/i);
+ const direction=raw.match(/\b(?:Li|Re|Links|Rechts)\b/i);
+ return {road:road[1].toUpperCase().replace(/\s+/g,''),hmp:hmp?.[1]||'',direction:direction?.[0]||''};
 }
 function roadCandidates(i){
  const road=roadIncident(i);if(!road)return [];
- const raw=((i.description||'')+' '+i.title).replace(/\s+/g,' ');
- const names=KNOWN_PLACES.filter(x=>new RegExp('\\b'+x.replace(/ /g,'\\s+')+'\\b','i').test(raw));
- // Never interpret Li/Re or a P2000 call number as a municipality.
- return names.flatMap(place=>[road.road+', '+place+', Nederland',place+', Nederland']);
+ const raw=((i.title||'')+' '+(i.description||'')).replace(/\s+/g,' ');
+ const city=KNOWN_PLACES.find(x=>new RegExp('\\b'+x.replace(/ /g,'\\s+')+'\\b','i').test(raw));
+ if(!city)return [];
+ const candidates=[];
+ // Een benoemde weg is vaak beter vindbaar dan het N-nummer.
+ const street=raw.match(/\b([\p{L}][\p{L}'’-]*(?:weg|dijk|laan|straat))\s+\d{1,3}[,.]\d{1,3}\b/iu);
+ if(street)candidates.push(street[1]+', '+city+', Nederland');
+ candidates.push(road.road+', '+city+', Nederland');
+ return candidates;
 }
 function locationCandidates(i){
- const results=[];
- const add=x=>{if(x&&!results.some(v=>v.toLocaleLowerCase('nl')===x.toLocaleLowerCase('nl')))results.push(x)};
+ if(roadIncident(i))return roadCandidates(i);
  const full=locationText(i);
- if(roadIncident(i)){if(full&&!/^\s*[AN]\s?\d{1,3}\s*,/i.test(full))add(full);for(const road of roadCandidates(i))add(road)}else if(full)add(full);
- // Een afzonderlijke plaats is alleen een fallback als de straat niet wordt gevonden.
- const place=KNOWN_PLACES.find(x=>new RegExp('\\b'+x.replace(/ /g,'\\s+')+'\\b','i').test((i.title||'')+' '+(i.description||'')));
- if(place&&!full?.includes(', '+place+', Nederland')&&!/\b[\p{L}][\p{L}'-]*\s+\d{1,4}[a-z]?\b/iu.test((i.title||'')+' '+(i.description||'')))add(place+', Nederland');
- return results;
+ return full?[full]:[];
 }
-function bestLocationKey(i){const candidates=locationCandidates(i);const precise=candidates.filter(k=>k.split(',').length>=3);if(precise.length){return precise.find(k=>geoCache[k]&&geoCache[k].lat)||precise.find(k=>geoCache[k]===undefined)||precise[0]}return candidates.find(k=>geoCache[k]&&geoCache[k].lat)||candidates.find(k=>geoCache[k]===undefined)||null}
+function bestLocationKey(i){
+ const candidates=locationCandidates(i);
+ return candidates.find(k=>geoCache[k]?.lat)||candidates.find(k=>geoCache[k]===undefined)||null;
+}
 function mapIcon(k){const color={fire:'#DC2626',ambulance:'#EAB308',police:'#2563EB'}[k]||'#64748b';const ink=k==='ambulance'?'#111827':'#fff';const art=k==='fire'?'<path d="M20 10c2 8-7 10-4 18-4-2-4-6-3-8-8 10-2 19 7 19 9 0 15-10 8-18 0 6-5 8-5 2 0-5 3-8-3-13z"/>':k==='ambulance'?'<rect x="9" y="18" width="21" height="14" rx="2"/><path d="M30 22h6l5 6v4H30z"/><circle cx="16" cy="34" r="3"/><circle cx="34" cy="34" r="3"/><path d="M19 20v10m-5-5h10" stroke="'+color+'" stroke-width="2"/>':'<path d="M22 10l12 5v12c0 8-6 12-12 15-6-3-12-7-12-15V15z" fill="none" stroke="'+ink+'" stroke-width="3"/><path d="M16 25l5 5 8-10" fill="none" stroke="'+ink+'" stroke-width="3"/>';
  return L.divIcon({className:'',html:'<div class="map-pin"><svg viewBox="0 0 44 58" xmlns="http://www.w3.org/2000/svg"><path class="pin-body" fill="'+color+'" d="M22 2C11 2 2 11 2 22c0 15 20 34 20 34s20-19 20-34C42 11 33 2 22 2z"/><g transform="translate(2 1) scale(.9)" fill="'+ink+'">'+art+'</g></svg></div>',iconSize:[42,55],iconAnchor:[21,55],popupAnchor:[0,-48]});}
 const tiles={Donker:['https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png','© OpenStreetMap contributors'],Licht:['https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png','© OpenStreetMap'],Satelliet:['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}','Tiles © Esri']};let tileLayer,gpsMarker=null,gpsRequested=false,miniInstances=new Map(),focusedIncident=false;
@@ -222,36 +213,63 @@ function queueGeocode(i){
  if(!place||geoCache[place]!==undefined||geoPending.has(place)||geoRetryAfter.get(place)>Date.now())return;
  geoPending.add(place);geoQueue.push(place);runGeocode();
 }
+// Landelijke adreszoeker: PDOK Locatieserver (officiele Nederlandse geo-data).
+// Alleen exacte straatnaam + juiste woonplaats accepteren. Geen huisnummerlogica.
+function sameGeoName(a,b){return norm(a)===norm(b)}
+async function lookupPDOK(place,signal){
+ const parts=place.split(',').map(x=>x.trim());
+ if(parts.length<3)return null;
+ const [street,city]=parts;
+ if(/^[AN]\d{1,3}$/i.test(street))return null;
+ const params=new URLSearchParams({q:street+' '+city,rows:'30',fq:'type:weg'});
+ const r=await fetch('https://api.pdok.nl/bzk/locatieserver/search/v3_1/free?'+params,{signal,headers:{Accept:'application/json'}});
+ if(!r.ok)throw Error('PDOK '+r.status);
+ const data=await r.json();
+ const docs=data?.response?.docs||[];
+ for(const d of docs){
+  const streetNames=[d.straatnaam,d.naam].filter(Boolean);
+  const cityNames=[d.woonplaatsnaam,d.woonplaats].filter(Boolean);
+  if(!streetNames.some(x=>sameGeoName(x,street)))continue;
+  if(!cityNames.some(x=>sameGeoName(x,city)))continue;
+  const point=String(d.centroide_ll||'').match(/POINT\s*\(\s*(-?\d+(?:\.\d+)?)\s+(-?\d+(?:\.\d+)?)\s*\)/i);
+  if(!point)continue;
+  const lng=Number(point[1]),lat=Number(point[2]);
+  if(lat<50.7||lat>53.7||lng<3.2||lng>7.4)continue;
+  return {lat,lng,label:d.weergavenaam||street+', '+city,approx:false,verifiedStreet:true,source:'PDOK'};
+ }
+ return null;
+}
+async function lookupOSM(place,signal){
+ const query=/Nederland/i.test(place)?place:place+', Nederland';
+ const url='https://nominatim.openstreetmap.org/search?format=json&countrycodes=nl&addressdetails=1&limit=10&q='+encodeURIComponent(query);
+ const r=await fetch(url,{headers:{Accept:'application/json'},signal});
+ if(!r.ok)throw Error('OSM '+r.status);
+ const arr=await r.json();
+ const results=Array.isArray(arr)?arr.filter(x=>x.address?.country_code==='nl'&&Number.isFinite(Number(x.lat))&&Number.isFinite(Number(x.lon))):[];
+ const parts=place.split(',').map(x=>x.trim()),street=parts[0],expectedCity=parts.length>=3?parts[1]:null;
+ const isRoad=/^[AN]\d{1,3}$/i.test(street),isCityOnly=!expectedCity;
+ const inCity=x=>!expectedCity||[x.address?.city,x.address?.town,x.address?.village,x.address?.municipality,x.address?.suburb,x.address?.hamlet].some(v=>sameGeoName(v,expectedCity))||String(x.display_name||'').toLocaleLowerCase('nl').includes(expectedCity.toLocaleLowerCase('nl'));
+ const chosen=results.find(x=>{
+  if(!inCity(x))return false;
+  if(isCityOnly)return [x.address?.city,x.address?.town,x.address?.village,x.address?.municipality].some(v=>sameGeoName(v,street));
+  if(isRoad)return [x.address?.road,x.address?.highway,x.display_name].some(v=>new RegExp('\\b'+street+'\\b','i').test(v||''));
+  return [x.address?.road,x.address?.pedestrian,x.address?.residential,x.address?.footway,x.address?.neighbourhood,x.address?.cycleway,x.address?.path].some(v=>sameGeoName(v,street));
+ });
+ return chosen?{lat:Number(chosen.lat),lng:Number(chosen.lon),label:chosen.display_name,approx:isCityOnly||isRoad,verifiedStreet:!isCityOnly&&!isRoad,source:'OSM'}:null;
+}
 async function runGeocode(){
  if(geoBusy||!geoQueue.length)return;
  geoBusy=true;const place=geoQueue.shift();
- const controller=new AbortController();
- const timeout=setTimeout(()=>controller.abort(),9000);
+ const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),12000);
  try{
-  const query=/Nederland/i.test(place)?place:place+', Nederland';
-  const url='https://nominatim.openstreetmap.org/search?format=json&countrycodes=nl&addressdetails=1&limit=5&q='+encodeURIComponent(query);
-  const r=await fetch(url,{headers:{'Accept':'application/json'},signal:controller.signal});
-  if(!r.ok)throw Error('HTTP '+r.status);
-  const arr=await r.json();
-  const results=Array.isArray(arr)?arr.filter(x=>x.address?.country_code==='nl'&&Number.isFinite(Number(x.lat))&&Number.isFinite(Number(x.lon))):[];
-  const street=place.split(',')[0].trim();
-  const isRoad=/^[AN]\d{1,3}$/i.test(street);
-  const isCityOnly=!place.includes(',')||/^([^,]+), Nederland$/i.test(place);
-  const same=(a,b)=>String(a||'').toLocaleLowerCase('nl').replace(/[^\p{L}\p{N}]/gu,'')===String(b||'').toLocaleLowerCase('nl').replace(/[^\p{L}\p{N}]/gu,'');
-  const streetMatch=results.find(x=>[x.address?.road,x.address?.pedestrian,x.address?.residential,x.address?.footway,x.address?.neighbourhood,x.address?.cycleway,x.address?.path].some(v=>same(v,street)));
-  const roadMatch=isRoad&&results.find(x=>[x.address?.road,x.address?.highway,x.display_name].some(v=>new RegExp('\\b'+street+'\\b','i').test(v||'')));
-  // A city-centre fallback is only allowed for an explicit city-only query.
-  const expectedCity=place.split(',')[1]?.trim();
-  const inCity=x=>!expectedCity||[x.address?.city,x.address?.town,x.address?.village,x.address?.municipality].some(v=>same(v,expectedCity));
-  const chosen=isCityOnly?results[0]:(isRoad?(roadMatch&&inCity(roadMatch)?roadMatch:null):(streetMatch&&inCity(streetMatch)?streetMatch:null));
-  geoCache[place]=chosen?{lat:Number(chosen.lat),lng:Number(chosen.lon),label:chosen.display_name,approx:isCityOnly||isRoad,verifiedStreet:!!streetMatch&&!isRoad}:null;
-  // Bij een opgegeven straat nooit terugvallen op een onnauwkeurig stadscentrum.
+  let loc=null;
+  // Eerst PDOK voor alle gewone straten, daarna OSM als tweede bron.
+  try{loc=await lookupPDOK(place,controller.signal)}catch(e){if(controller.signal.aborted)throw e}
+  if(!loc)loc=await lookupOSM(place,controller.signal);
+  geoCache[place]=loc;
   try{localStorage.setItem('p2000geocache',JSON.stringify(geoCache))}catch(e){}
  }catch(e){
-  // Show a meaningful result instead of an infinite spinner; allow a later retry.
-  geoCache[place]=null;
-  geoRetryAfter.set(place,Date.now()+60000);
-  // Geen onbevestigde fallback-pin na een netwerkfout.
+  geoCache[place]=null;geoRetryAfter.set(place,Date.now()+60000);
  }finally{
   clearTimeout(timeout);geoPending.delete(place);geoBusy=false;
   updateOpenMiniMaps();updateMapMarkers();setTimeout(runGeocode,1300);
