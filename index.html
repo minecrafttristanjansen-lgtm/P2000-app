@@ -56,7 +56,7 @@ function parseIncidentTime(value){
  if(dutch)return parseIncidentTime(`${dutch[3]}-${dutch[2]}-${dutch[1]}T${dutch[4]}:${dutch[5]}:${dutch[6]||'00'}`);
  return new Date(raw);
 }
-let incidents=[],demo=false,lastFetch=0;const enabled=new Set(JSON.parse(localStorage.getItem('p2000disciplines')||'["fire","ambulance","police"]'));let homeFilter='all';let map=null,markers=null,geoCache={},geoBusy=false,geoQueue=[],geoPending=new Set(),mapStyle=localStorage.getItem('p2000map')||'Licht';try{geoCache=JSON.parse(localStorage.getItem('p2000geocache')||'{}')}catch(e){};if(localStorage.getItem('p2000geo_version')!=='0210'){geoCache={};localStorage.removeItem('p2000geocache');localStorage.setItem('p2000geo_version','0210')}const sample=[{title:'P1 Brand woning – Voorbeeldstraat Urk',date:new Date(Date.now()-6*60000),link:'',kind:'fire',description:'P1 BR woning TS 25-1231 HW 25-1251',example:true},{title:'A1 Ambulance inzet – Emmeloord',date:new Date(Date.now()-14*60000),link:'',kind:'ambulance',example:true},{title:'P1 Grote brand – opschaling woningbrand Urk',date:new Date(Date.now()-3*60000),link:'',kind:'fire',description:'P1 Grote brand TS 25-1231 TS 25-1331 OVD',example:true}];function status(s,type=''){let el=$('status');el.textContent=s;el.className='status '+type+(s?'':' hidden')}function kind(t){t=t.toLowerCase();return /brandweer|brand |p1 |p2 |tankautospuit|autoladder|middelbrand|grote brand/.test(t)?'fire':/ambulance|a1 |a2 |rapid responder|mmt/.test(t)?'ambulance':/politie|agent|eenheid politie/.test(t)?'police':'other'}// V0.14: uitsluitend de echte capcodes uit bronmetadata gebruiken.
+let incidents=[],demo=false,lastFetch=0;const enabled=new Set(JSON.parse(localStorage.getItem('p2000disciplines')||'["fire","ambulance","police"]'));let homeFilter='all';let map=null,markers=null,geoCache={},geoBusy=false,geoQueue=[],geoPending=new Set(),mapStyle=localStorage.getItem('p2000map')||'Licht';try{geoCache=JSON.parse(localStorage.getItem('p2000geocache')||'{}')}catch(e){};if(localStorage.getItem('p2000geo_version')!=='0213'){geoCache={};localStorage.removeItem('p2000geocache');localStorage.setItem('p2000geo_version','0213')}const sample=[{title:'P1 Brand woning – Voorbeeldstraat Urk',date:new Date(Date.now()-6*60000),link:'',kind:'fire',description:'P1 BR woning TS 25-1231 HW 25-1251',example:true},{title:'A1 Ambulance inzet – Emmeloord',date:new Date(Date.now()-14*60000),link:'',kind:'ambulance',example:true},{title:'P1 Grote brand – opschaling woningbrand Urk',date:new Date(Date.now()-3*60000),link:'',kind:'fire',description:'P1 Grote brand TS 25-1231 TS 25-1331 OVD',example:true}];function status(s,type=''){let el=$('status');el.textContent=s;el.className='status '+type+(s?'':' hidden')}function kind(t){t=t.toLowerCase();return /brandweer|brand |p1 |p2 |tankautospuit|autoladder|middelbrand|grote brand/.test(t)?'fire':/ambulance|a1 |a2 |rapid responder|mmt/.test(t)?'ambulance':/politie|agent|eenheid politie/.test(t)?'police':'other'}// V0.14: uitsluitend de echte capcodes uit bronmetadata gebruiken.
 // Zescijferige roepnummers in de berichttekst zijn GEEN capcodes.
 function normalizeCapcode(raw){const code=String(raw??'').trim();return /^\d{6,7}$/.test(code)?code.padStart(7,'0'):null}
 function isMonitorCap(c){return /(?:monitor(?:code|capcode|groep)?|lichtkrant)/i.test(c.label||'')}
@@ -106,10 +106,25 @@ function locationText(i){
  const raw=((i.description||'')+' '+(i.title||'')).replace(/\s+/g,' ').replace(/\b(?:P\s*[1-5]|A\s*[012]|Prio\s*[1-5])\b/gi,' ').trim();
  const placePattern=KNOWN_PLACES.map(x=>x.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).sort((a,b)=>b.length-a.length).join('|');
  const placeMatch=raw.match(new RegExp('\\b('+placePattern+')\\b','i'));
- const place=placeMatch?.[1];
+ let place=placeMatch?.[1];
  const suffix='straat|laan|weg|dijk|plein|hof|erf|singel|kade|pad|steeg|plantsoen|gracht|baan|dreef|park|wal|poort|akker|veld';
- const numbered=raw.match(/\b(horst|kamp|wold|botter|galjoen|kempenaar|schouw|gondel|tjalk|karveel|punter|boeier|waterwijk|landstrekenwijk)\s+(\d{1,3})\b/i);
- if(numbered&&place)return numbered[1]+' '+numbered[2]+', '+place+', Nederland';
+ // Landelijke herkenning: een getal kan onderdeel van een straatnaam zijn
+ // (Horst 30, Botter 12, Dorpsstraat 30). P2000 levert geen huisnummers.
+ // Het cijfer hoort altijd bij de volledige straatnaam; de geocoder
+ // accepteert uitsluitend een exact overeenkomende straat in de juiste plaats.
+ const numbered=raw.match(/\b([\p{L}][\p{L}'-]*(?:\s+[\p{L}][\p{L}'-]*){0,2})\s+(\d{1,4}[a-z]?)\b/iu);
+ if(numbered){
+  const after=raw.slice(numbered.index+numbered[0].length);
+  const cityAfter=KNOWN_PLACES.filter(x=>norm(x)!==norm(numbered[1])).find(x=>new RegExp('\\b'+x.replace(/ /g,'\\s+')+'\\b','i').test(after));
+  if(cityAfter)place=cityAfter;
+  if(place&&norm(place)!==norm(numbered[1])&&(!placeMatch||numbered.index<placeMatch.index)){
+   const words=numbered[1].trim().split(/\s+/);
+   const prefixNoise=/^(?:woning|brand|br|p|bmd|ambulance|ambu|ongeval|incident|ass|hulpverlening|melding|rit|aanrijding|liftopsluiting|stormschade|pr(?:io)?|buiten|binnen|spoed)$/i;
+   while(words.length>1&&prefixNoise.test(words[0]))words.shift();
+   const candidate=words.join(' ')+' '+numbered[2];
+   if(!prefixNoise.test(words[0])&&!/^(?:A|N)\d+$/i.test(words[0]))return candidate+', '+place+', Nederland';
+  }
+ }
  const streetRe=new RegExp('\\b((?:[\\p{L}][\\p{L}\\x27-]*)(?:'+suffix+'))\\b','iu');
  const street=raw.match(streetRe);
  if(street&&place){const before=raw.slice(Math.max(0,street.index-35),street.index);const prefix=before.match(/\b(van|de|den|het|sint|st)\s+$/i);return (prefix?prefix[0]:'')+street[1]+', '+place+', Nederland';}
@@ -146,10 +161,10 @@ function locationCandidates(i){
  if(roadIncident(i)){if(full&&!/^\s*[AN]\s?\d{1,3}\s*,/i.test(full))add(full);for(const road of roadCandidates(i))add(road)}else if(full)add(full);
  // Een afzonderlijke plaats is alleen een fallback als de straat niet wordt gevonden.
  const place=KNOWN_PLACES.find(x=>new RegExp('\\b'+x.replace(/ /g,'\\s+')+'\\b','i').test((i.title||'')+' '+(i.description||'')));
- if(place)add(place+', Nederland');
+ if(place&&!full?.includes(', '+place+', Nederland')&&!/\b[\p{L}][\p{L}'-]*\s+\d{1,4}[a-z]?\b/iu.test((i.title||'')+' '+(i.description||'')))add(place+', Nederland');
  return results;
 }
-function bestLocationKey(i){const candidates=locationCandidates(i);return candidates.find(k=>geoCache[k]&&geoCache[k].lat)||candidates.find(k=>geoCache[k]===undefined)||null}
+function bestLocationKey(i){const candidates=locationCandidates(i);const precise=candidates.filter(k=>k.split(',').length>=3);if(precise.length){return precise.find(k=>geoCache[k]&&geoCache[k].lat)||precise.find(k=>geoCache[k]===undefined)||precise[0]}return candidates.find(k=>geoCache[k]&&geoCache[k].lat)||candidates.find(k=>geoCache[k]===undefined)||null}
 function mapIcon(k){const color={fire:'#DC2626',ambulance:'#EAB308',police:'#2563EB'}[k]||'#64748b';const ink=k==='ambulance'?'#111827':'#fff';const art=k==='fire'?'<path d="M20 10c2 8-7 10-4 18-4-2-4-6-3-8-8 10-2 19 7 19 9 0 15-10 8-18 0 6-5 8-5 2 0-5 3-8-3-13z"/>':k==='ambulance'?'<rect x="9" y="18" width="21" height="14" rx="2"/><path d="M30 22h6l5 6v4H30z"/><circle cx="16" cy="34" r="3"/><circle cx="34" cy="34" r="3"/><path d="M19 20v10m-5-5h10" stroke="'+color+'" stroke-width="2"/>':'<path d="M22 10l12 5v12c0 8-6 12-12 15-6-3-12-7-12-15V15z" fill="none" stroke="'+ink+'" stroke-width="3"/><path d="M16 25l5 5 8-10" fill="none" stroke="'+ink+'" stroke-width="3"/>';
  return L.divIcon({className:'',html:'<div class="map-pin"><svg viewBox="0 0 44 58" xmlns="http://www.w3.org/2000/svg"><path class="pin-body" fill="'+color+'" d="M22 2C11 2 2 11 2 22c0 15 20 34 20 34s20-19 20-34C42 11 33 2 22 2z"/><g transform="translate(2 1) scale(.9)" fill="'+ink+'">'+art+'</g></svg></div>',iconSize:[42,55],iconAnchor:[21,55],popupAnchor:[0,-48]});}
 const tiles={Donker:['https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png','© OpenStreetMap contributors'],Licht:['https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png','© OpenStreetMap'],Satelliet:['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}','Tiles © Esri']};let tileLayer,gpsMarker=null,gpsRequested=false,miniInstances=new Map(),focusedIncident=false;
@@ -225,23 +240,24 @@ async function runGeocode(){
   const streetMatch=results.find(x=>[x.address?.road,x.address?.pedestrian,x.address?.residential,x.address?.footway,x.address?.neighbourhood,x.address?.cycleway,x.address?.path].some(v=>same(v,street)));
   const roadMatch=isRoad&&results.find(x=>[x.address?.road,x.address?.highway,x.display_name].some(v=>new RegExp('\\b'+street+'\\b','i').test(v||'')));
   // A city-centre fallback is only allowed for an explicit city-only query.
-  const chosen=isCityOnly?results[0]:(isRoad?roadMatch:streetMatch);
+  const expectedCity=place.split(',')[1]?.trim();
+  const inCity=x=>!expectedCity||[x.address?.city,x.address?.town,x.address?.village,x.address?.municipality].some(v=>same(v,expectedCity));
+  const chosen=isCityOnly?results[0]:(isRoad?(roadMatch&&inCity(roadMatch)?roadMatch:null):(streetMatch&&inCity(streetMatch)?streetMatch:null));
   geoCache[place]=chosen?{lat:Number(chosen.lat),lng:Number(chosen.lon),label:chosen.display_name,approx:isCityOnly||isRoad,verifiedStreet:!!streetMatch&&!isRoad}:null;
-  if(!chosen){const incident=incidents.find(i=>locationCandidates(i).includes(place));if(incident){const fallback=locationCandidates(incident).find(k=>k!==place&&geoCache[k]===undefined&&!geoPending.has(k));if(fallback){geoPending.add(fallback);geoQueue.push(fallback)}}}
+  // Bij een opgegeven straat nooit terugvallen op een onnauwkeurig stadscentrum.
   try{localStorage.setItem('p2000geocache',JSON.stringify(geoCache))}catch(e){}
  }catch(e){
   // Show a meaningful result instead of an infinite spinner; allow a later retry.
   geoCache[place]=null;
   geoRetryAfter.set(place,Date.now()+60000);
-  const incident=incidents.find(i=>locationCandidates(i).includes(place));
-  if(incident){const fallback=locationCandidates(incident).find(k=>k!==place&&geoCache[k]===undefined&&!geoPending.has(k));if(fallback){geoPending.add(fallback);geoQueue.push(fallback)}}
+  // Geen onbevestigde fallback-pin na een netwerkfout.
  }finally{
   clearTimeout(timeout);geoPending.delete(place);geoBusy=false;
   updateOpenMiniMaps();updateMapMarkers();setTimeout(runGeocode,1300);
  }
 }
 function updateOpenMiniMaps(){document.querySelectorAll('details[open][data-detail]').forEach(d=>{const idx=Number(d.dataset.detail),i=currentRows[idx];if(!i)return;const box=d.querySelector('.mini-content');if(i.kind!=='ambulance'&&box&&!box.querySelector('.leaflet-container')){box.innerHTML=miniMap(i,idx);initMiniMap(i,idx)}})}
-function updateMapMarkers(){if(!map||!markers)return;markers.clearLayers();let shown=0;for(const i of incidents.filter(i=>i.kind!=='ambulance'&&visible(i)&&selectedMatches(i)&&(!Number.isFinite(i.date.getTime())||i.date.getTime()>=Date.now()-Number($('age').value)*3600000)).slice(0,100)){const place=bestLocationKey(i);if(!place)continue;const loc=geoCache[place];if(loc===undefined){if(geoQueue.length<12)queueGeocode(i);continue}if(!loc)continue;const marker=L.marker([loc.lat,loc.lng],{icon:mapIcon(i.kind)}).addTo(markers);marker.bindPopup('<strong>'+esc(i.title)+'</strong><div>'+esc(place)+(roadIncident(i)?' (globale weglocatie, HMP niet exact)':' (globale locatie)')+'</div>');marker.on('click',()=>showMapInfo(i));shown++}const el=$('mapstatus');if(el)el.textContent=shown+' incidentpinpoints met herkende locatie. Pinpoints kunnen een plaatscentrum aanduiden als de exacte straat onbekend is.';}
+function updateMapMarkers(){if(!map||!markers)return;markers.clearLayers();let shown=0;for(const i of incidents.filter(i=>i.kind!=='ambulance'&&visible(i)&&selectedMatches(i)&&(!Number.isFinite(i.date.getTime())||i.date.getTime()>=Date.now()-Number($('age').value)*3600000)).slice(0,100)){const place=bestLocationKey(i);if(!place)continue;const loc=geoCache[place];if(loc===undefined){if(geoQueue.length<12)queueGeocode(i);continue}if(!loc)continue;const marker=L.marker([loc.lat,loc.lng],{icon:mapIcon(i.kind)}).addTo(markers);marker.bindPopup('<strong>'+esc(i.title)+'</strong><div>'+esc(place)+(roadIncident(i)?' (globale weglocatie, HMP niet exact)':' (globale locatie)')+'</div>');marker.on('click',()=>showMapInfo(i));shown++}const el=$('mapstatus');if(el)el.textContent=shown+' incidentpinpoints met herkende locatie. Pinpoints worden alleen op bevestigde locaties geplaatst; niet elke melding bevat een straat.';}
 let selectedMapIncidentId=null;
 function showMapInfo(i){const place=bestLocationKey(i);selectedMapIncidentId=incidentId(i);const box=$('mapinfo');box.classList.remove('hidden');box.setAttribute('role','button');box.setAttribute('tabindex','0');box.setAttribute('aria-label','Open deze melding op Home');box.innerHTML='<strong>'+esc(i.kind==='fire'?'🔥 Brandweer':i.kind==='ambulance'?'🚑 Ambulance':'🛡️ Politie')+'</strong><h3>'+esc(i.title)+'</h3><p>'+esc(place||'Locatie onbekend')+'</p><p>'+esc((i.description||'').replace(/\s+/g,' ').trim())+'</p>'}
 function closeMapInfo(){selectedMapIncidentId=null;$('mapinfo').classList.add('hidden')}
@@ -249,7 +265,7 @@ function showIncidentOnHome(id){const i=incidents.find(x=>incidentId(x)===id);if
 $('mapinfo').addEventListener('click',()=>{if(selectedMapIncidentId)showIncidentOnHome(selectedMapIncidentId)});
 $('mapinfo').addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&selectedMapIncidentId){e.preventDefault();showIncidentOnHome(selectedMapIncidentId)}});
 function openMapIncident(id){focusedIncident=true;const i=incidents.find(x=>incidentId(x)===id);if(!i)return;mapStyle='Licht';localStorage.setItem('p2000map',mapStyle);document.querySelectorAll('.mapstyle').forEach(b=>b.classList.toggle('active',b.dataset.style==='Licht'));switchTab('mapview');applyMapStyle();const place=bestLocationKey(i),loc=place&&geoCache[place];if(loc){map.invalidateSize({pan:false});map.setView([loc.lat,loc.lng],14);showMapInfo(i)}else{$('mapinfo').classList.remove('hidden');$('mapinfo').textContent='Exacte locatie niet beschikbaar. De kaart toont Nederland.';selectedMapIncidentId=id}}
-function miniMap(i,idx){const place=bestLocationKey(i);if(!place)return '<div class="mini-map mini-unavailable">Geen betrouwbare incidentlocatie gevonden. Geen pinpoint geplaatst.</div>';const loc=geoCache[place];if(loc===undefined){queueGeocode(i);return '<div class="mini-map" style="display:flex;align-items:center;justify-content:center;padding:15px;text-align:center;color:#cbd5e1">Locatie wordt opgezocht: '+esc(place)+'…</div>'}if(!loc)return '<div class="mini-map mini-unavailable">Geen bevestigde straatlocatie gevonden: '+esc(place)+'.</div>';return '<div class="mini-map" id="mini-'+idx+'"></div><p class="map-msg">'+esc(place)+(roadIncident(i)?' — globale weglocatie; HMP niet exact bevestigd.':loc.verifiedStreet?' — straat herkend.':' — globale locatie (niet noodzakelijk de exacte straat).')+'</p><button class="map-link" data-open-map="'+idx+'">Open op volledige kaart</button>'}
+function miniMap(i,idx){const place=bestLocationKey(i);if(!place)return '<div class="mini-map mini-unavailable">Geen betrouwbare incidentlocatie gevonden. Geen pinpoint geplaatst.</div>';const loc=geoCache[place];if(loc===undefined){queueGeocode(i);return '<div class="mini-map" style="display:flex;align-items:center;justify-content:center;padding:15px;text-align:center;color:#cbd5e1">Locatie wordt opgezocht: '+esc(place)+'…</div>'}if(!loc)return '<div class="mini-map mini-unavailable">Geen bevestigde straatlocatie gevonden: '+esc(place)+'.</div>';return '<div class="mini-map" id="mini-'+idx+'"></div><p class="map-msg">'+esc(place)+(roadIncident(i)?' — globale weglocatie; HMP niet exact bevestigd.':loc.verifiedStreet?' — volledige straatnaam bevestigd.':' — globale locatie (niet noodzakelijk de exacte straat).')+'</p><button class="map-link" data-open-map="'+idx+'">Open op volledige kaart</button>'}
 function initMiniMap(i,idx){if(!window.L)return;const el=$('mini-'+idx),loc=geoCache[bestLocationKey(i)];if(!el||!loc||el.dataset.ready)return;el.dataset.ready='1';const mini=L.map(el,{zoomControl:false,dragging:false,scrollWheelZoom:false,touchZoom:false,doubleClickZoom:false,attributionControl:true,zoomAnimation:false}).setView([loc.lat,loc.lng],14);L.tileLayer(tiles.Licht[0],{maxZoom:19,attribution:'© OpenStreetMap contributors'}).addTo(mini);el.classList.remove('dark-tiles');L.marker([loc.lat,loc.lng],{icon:mapIcon(i.kind)}).addTo(mini);miniInstances.set(el,mini);el.addEventListener('click',()=>openMapIncident(incidentId(i)));requestAnimationFrame(()=>mini.invalidateSize({pan:false,animate:false}))}
 let historyRows=readHistory(),displayLimit=60;
 function readHistory(){try{return JSON.parse(localStorage.getItem('p2000_history_v016')||'[]').map(i=>({...i,date:parseIncidentTime(i.date)})).filter(i=>Number.isFinite(i.date.getTime())&&i.date.getTime()>Date.now()-7*86400000)}catch(e){return []}}
